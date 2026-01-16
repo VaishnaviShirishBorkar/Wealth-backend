@@ -1,23 +1,46 @@
 import nodemailer from 'nodemailer'
 
+// const transporter = nodemailer.createTransport({
+// //      host: "smtp.gmail.com",
+// //   port: 587,
+// //   secure: false, // TLS
+//   // service: "gmail",
+//    host: "smtp.gmail.com",
+//   port: 465,          // 👈 IMPORTANT
+//   secure: true,       // 👈 MUST be true for 465
+//     auth: {
+//         user: process.env.EMAIL_USER,
+//         pass: process.env.EMAIL_PASS
+//     }
+// });
+
 const transporter = nodemailer.createTransport({
-//      host: "smtp.gmail.com",
-//   port: 587,
-//   secure: false, // TLS
-  service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // SSL
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: true
+  },
+  connectionTimeout: 15000, // 15 seconds
+  greetingTimeout: 15000,
+  socketTimeout: 15000
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("❌ SMTP ERROR:", error);
-  } else {
-    console.log("✅ SMTP ready to send emails");
-  }
-});
+
+if (process.env.NODE_ENV !== "production") {
+  transporter.verify((error) => {
+    if (error) {
+      console.error("SMTP verify failed", error);
+    } else {
+      console.log("SMTP ready");
+    }
+  });
+}
+
 
 export const sendBudgetExceededEmail = async (to, spent, budget) => {
   try {
