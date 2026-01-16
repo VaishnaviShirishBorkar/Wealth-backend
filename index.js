@@ -1,5 +1,5 @@
-import mongoose, { mongo } from 'mongoose'
 import "./env.js";                  // 👈 FIRST
+import mongoose, { mongo } from 'mongoose'
 // import "./cron/budget.cron.js";     // 👈 AFTER env
 
 
@@ -12,7 +12,6 @@ import transactionRoutes from './routes/transaction.routes.js'
 import { sendBudgetExceededEmail } from './utils/email.utils.js';
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
