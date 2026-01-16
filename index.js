@@ -42,6 +42,10 @@ app.use("/api/transaction", transactionRoutes);
 // .then(() => console.log('Mongodb Connected!'))
 // .catch((error) => console.log('DB Error: ', error));
 
+app.get("/", (req, res) => {
+  res.send("Wealth backend is running 🚀");
+});
+
 /* ✅ CONNECT DB FIRST */
 mongoose
   .connect(process.env.MONGO_URI)
