@@ -58,6 +58,13 @@ mongoose
     process.exit(1);
   });
 
+  const PORT = process.env.PORT || 5002;
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
+
+
 // app.listen(5001, () => console.log('Server running is 5001'));
 // if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
 //   const PORT = process.env.PORT || 5001;
